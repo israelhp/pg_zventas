@@ -7,7 +7,6 @@ const initialState = (() => {
   }
   return {
     isAuthenticated: false,
-    user: null,
     token: ''
   }
 })()

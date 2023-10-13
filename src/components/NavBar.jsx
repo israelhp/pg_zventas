@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import {
   Navbar,
@@ -8,7 +8,6 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-  Link,
   Input,
   Dropdown,
   DropdownTrigger,
@@ -28,19 +27,9 @@ const NavBar = () => {
   const itemActive = useAppSelector(state => state.nav)
   const { setItemMenuActive } = useNavActions()
 
-  console.log(isAutenticated)
   const handleItemClick = e => {
     setItemMenuActive(e)
   }
-
-  const menuItems = [
-    'Profile',
-    'Dashboard',
-    'Activity',
-    'Team Settings',
-    'Help & Feedback',
-    'Log Out'
-  ]
 
   return (
     <Navbar
@@ -162,27 +151,5 @@ const NavBar = () => {
     </Navbar>
   )
 }
-
-/*
-
-        {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
-            <Link
-              color={
-                index === 2
-                  ? 'primary'
-                  : index === menuItems.length - 1
-                  ? 'danger'
-                  : 'foreground'
-              }
-              className="w-full"
-              href="#"
-              size="lg"
-            >
-              {item}
-            </Link>
-          </NavbarMenuItem>
-        ))}
-*/
 
 export default NavBar

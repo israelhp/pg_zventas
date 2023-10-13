@@ -19,14 +19,45 @@ import useAuthActions from '../hooks/useAuthActions'
 const ModalLogin = () => {
   const isAutenticated = useAppSelector(state => state.auth.isAuthenticated)
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [errors, setErrors] = useState({ id: 0, message: '' })
 
-  console.log(isAutenticated)
-  const { performLogin } = useAuthActions()
+  const { performLogin, isLoginLoading } = useAuthActions()
 
   const handleSubmit = async () => {
-    await performLogin({ email, password })
+    const error = validateInputs(username, password)
+
+    if (Object.keys(error).length > 0) {
+      setErrors({
+        id: 1,
+        message: error.message
+      })
+      return
+    }
+
+    const result = await performLogin({
+      username,
+      password,
+      grant_type: 'password'
+    })
+
+    if (result)
+      setErrors({
+        id: 1,
+        message: result
+      })
+  }
+
+  function validateInputs() {
+    const error = {}
+    if (!password)
+      error.message = 'El campo de contraseña no puede estar vacío.'
+
+    if (!username)
+      error.message = 'El campo de correo electrónico no puede estar vacío.'
+
+    return error
   }
 
   return (
@@ -41,13 +72,11 @@ const ModalLogin = () => {
               <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
               <ModalBody>
                 <Input
-                  type="email"
-                  label="Email"
+                  type="text"
+                  label="Username"
                   variant="bordered"
-                  value={email}
-                  onValueChange={setEmail}
-                  validationState="invalid"
-                  errorMessage={false ? 'hola' : ''}
+                  value={username}
+                  onValueChange={setUsername}
                 />
                 <Input
                   label="Password"
@@ -56,6 +85,11 @@ const ModalLogin = () => {
                   value={password}
                   onValueChange={setPassword}
                 />
+                <div>
+                  <p className="text-small text-center text-red-600">
+                    {errors.id != 0 ? errors.message : ''}
+                  </p>
+                </div>
                 <div className="flex py-2 px-1 justify-between">
                   <Checkbox
                     classNames={{
@@ -88,7 +122,11 @@ const ModalLogin = () => {
                 <Button color="danger" variant="flat" onClick={onClose}>
                   Close
                 </Button>
-                <Button color="primary" onPress={handleSubmit}>
+                <Button
+                  color="primary"
+                  onPress={handleSubmit}
+                  isLoading={isLoginLoading}
+                >
                   Sign in
                 </Button>
               </ModalFooter>
