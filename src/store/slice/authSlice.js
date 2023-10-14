@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = (() => {
   const persistedState = localStorage.getItem('__redux__state__')
+
   if (persistedState) {
     return JSON.parse(persistedState).auth
   }
@@ -21,8 +22,8 @@ export const authSlice = createSlice({
       return state
     },
     logout: state => {
+      state.token = ''
       state.isAuthenticated = false
-      state.user = null
       return state
     }
   }

@@ -20,15 +20,21 @@ import { useAppSelector } from '../hooks/store'
 import { LogoIcon, SearchIcon, ShoppingCartIcon } from './Icons'
 import ModalLogin from './ModalLogin'
 import useNavActions from '../hooks/useNavActions'
+import useAuthActions from '../hooks/useAuthActions'
 
 const NavBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const isAutenticated = useAppSelector(state => state.auth.isAuthenticated)
   const itemActive = useAppSelector(state => state.nav)
   const { setItemMenuActive } = useNavActions()
+  const { performLogout } = useAuthActions()
 
   const handleItemClick = e => {
     setItemMenuActive(e)
+  }
+
+  const handleClickLogout = () => {
+    performLogout()
   }
 
   return (
@@ -112,16 +118,14 @@ const NavBar = () => {
                 <p className="font-semibold">Signed in as</p>
                 <p className="font-semibold">zoey@example.com</p>
               </DropdownItem>
-              <DropdownItem key="settings">My Settings</DropdownItem>
-              <DropdownItem key="team_settings">Team Settings</DropdownItem>
-              <DropdownItem key="analytics">Analytics</DropdownItem>
-              <DropdownItem key="system">System</DropdownItem>
+              <DropdownItem key="settings">Pedidos</DropdownItem>
               <DropdownItem key="configurations">Configurations</DropdownItem>
-              <DropdownItem key="help_and_feedback">
-                Help & Feedback
-              </DropdownItem>
-              <DropdownItem key="logout" color="danger">
-                Log Out
+              <DropdownItem
+                key="logout"
+                color="danger"
+                onClick={handleClickLogout}
+              >
+                Cerrar sesion
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>

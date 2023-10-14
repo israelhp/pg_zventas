@@ -12,6 +12,10 @@ export const persistancesLocalStorageMiddleware = store => next => action => {
     localStorage.setItem('__redux__state__', JSON.stringify(stateToPersist))
   }
 
+  if (action.type == 'auth/logout') {
+    localStorage.removeItem('__redux__state__')
+  }
+
   if (action.type == 'nav/itemactive') {
     console.log(action)
   }

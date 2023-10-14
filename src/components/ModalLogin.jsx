@@ -8,7 +8,6 @@ import {
   useDisclosure,
   Checkbox,
   Input,
-  Link,
   Divider
 } from '@nextui-org/react'
 import { useState } from 'react'
@@ -98,9 +97,13 @@ const ModalLogin = () => {
                   >
                     Remember me
                   </Checkbox>
-                  <Link color="primary" href="#" size="sm">
+                  <NavLink
+                    to="/forgot-password"
+                    className="text-blue-500 text-sm"
+                    onClick={onClose}
+                  >
                     Forgot password?
-                  </Link>
+                  </NavLink>
                 </div>
                 <Divider></Divider>
                 <div>

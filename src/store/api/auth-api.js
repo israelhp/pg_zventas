@@ -1,7 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {
   AUTH_LOGIN_ENPOINT,
-  AUTH_REGISTER_ENPOINT
+  AUTH_REGISTER_ENPOINT,
+  AUTH_SEND_RESET_CODE_ENPOINT
 } from '../../constants/enpoints'
 
 export const authApi = createApi({
@@ -25,8 +26,19 @@ export const authApi = createApi({
         method: 'POST',
         body: userData
       })
+    }),
+    sendResetCode: builder.mutation({
+      query: username => ({
+        url: AUTH_SEND_RESET_CODE_ENPOINT,
+        method: 'POST',
+        body: username
+      })
     })
   })
 })
 
-export const { usePostLoginMutation, useCreateUserMutation } = authApi
+export const {
+  usePostLoginMutation,
+  useCreateUserMutation,
+  useSendResetCodeMutation
+} = authApi

@@ -1,7 +1,8 @@
 import { login, logout } from '../store/slice/authSlice'
 import {
   usePostLoginMutation,
-  useCreateUserMutation
+  useCreateUserMutation,
+  useSendResetCodeMutation
 } from '../store/api/auth-api'
 import { useAppDispatch } from './store'
 
@@ -20,9 +21,17 @@ const useAuthActions = () => {
     }
   ] = useCreateUserMutation()
 
+  const [
+    sendResetCode,
+    {
+      isLoading: isSendResetCodeLoading,
+      isError: isSendResetCodeError,
+      error: sendResetCodeError
+    }
+  ] = useSendResetCodeMutation()
+
   const performLogin = async credentials => {
     try {
-      console.log(credentials)
       const result = await postLogin(credentials).unwrap()
       if (!result.error) {
         const payload = { token: result.access_token }
@@ -35,21 +44,31 @@ const useAuthActions = () => {
     }
   }
 
-  const performLogout = async credentials => {}
+  const performLogout = () => {
+    dispatch(logout())
+  }
 
   const performCreateUser = async newUser => {
     try {
       const result = await createUser(newUser).unwrap()
-
       if (result.error) return { result: 2, message: 'Intenta de nuevo' }
-
-      console.log(result)
       if (result.code == 400) return { result: 3, message: 'Usuario ya existe' }
       if (result.code == 200)
         return { result: 1, message: 'Se creo el usuario correctamente' }
     } catch (error) {
-      console.error('rejected', error)
       return { result: 2, message: 'Intenta de nuevo' }
+    }
+  }
+
+  const performSendMail = async username => {
+    try {
+      const res = await sendResetCode(username).unwrap()
+
+      if (res.error) return { result: -1, message: 'Intenta de nuevo' }
+
+      return { result: res.code, message: res.message }
+    } catch (e) {
+      return { result: -1, message: 'Intenta mas tarde' }
     }
   }
 
@@ -57,12 +76,16 @@ const useAuthActions = () => {
     performLogin,
     performLogout,
     performCreateUser,
+    performSendMail,
     isLoginLoading,
     isCreateUserLoading,
+    isSendResetCodeLoading,
     isLoginError,
     isCreateUserError,
+    isSendResetCodeError,
     loginError,
-    createUserError
+    createUserError,
+    sendResetCodeError
   }
 }
 

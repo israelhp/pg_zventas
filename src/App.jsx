@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
+import ForgotPassword from './components/ForgotPassword'
 
 const ShoppingCart = lazy(() => import('./components/ShoppingCart'))
 const NotFound = lazy(() => import('./components/NotFound'))
@@ -23,6 +24,7 @@ function App() {
               <Route path="/information" element={<Information />} />
               <Route path="/shopping-cart" element={<ShoppingCart />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
