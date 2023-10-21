@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {
   AUTH_LOGIN_ENPOINT,
   AUTH_REGISTER_ENPOINT,
-  AUTH_SEND_RESET_CODE_ENPOINT
+  AUTH_SEND_RESET_CODE_ENPOINT,
+  AUTH_SEND_RESET_PASS_ENPOINT
 } from '../../constants/enpoints'
 
 export const authApi = createApi({
@@ -31,7 +32,20 @@ export const authApi = createApi({
       query: username => ({
         url: AUTH_SEND_RESET_CODE_ENPOINT,
         method: 'POST',
-        body: username
+        body: username,
+        headers: {
+          'Content-Type': 'application/json' // Ajusta el tipo de contenido según sea necesario
+        }
+      })
+    }),
+    resetPassword: builder.mutation({
+      query: username => ({
+        url: AUTH_SEND_RESET_PASS_ENPOINT,
+        method: 'POST',
+        body: username,
+        headers: {
+          'Content-Type': 'application/json' // Ajusta el tipo de contenido según sea necesario
+        }
       })
     })
   })
@@ -40,5 +54,6 @@ export const authApi = createApi({
 export const {
   usePostLoginMutation,
   useCreateUserMutation,
-  useSendResetCodeMutation
+  useSendResetCodeMutation,
+  useResetPasswordMutation
 } = authApi

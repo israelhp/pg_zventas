@@ -4,7 +4,7 @@ import { optionsNav } from '../../constants/constants'
 const initialState = (() => {
   const persistedState = localStorage.getItem('__redux__state__')
   if (persistedState) {
-    return JSON.parse(persistedState).auth
+    return JSON.parse(persistedState).nav
   }
   return {
     id: optionsNav[0].id

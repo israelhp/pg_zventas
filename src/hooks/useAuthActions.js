@@ -2,7 +2,8 @@ import { login, logout } from '../store/slice/authSlice'
 import {
   usePostLoginMutation,
   useCreateUserMutation,
-  useSendResetCodeMutation
+  useSendResetCodeMutation,
+  useResetPasswordMutation
 } from '../store/api/auth-api'
 import { useAppDispatch } from './store'
 
@@ -12,6 +13,15 @@ const useAuthActions = () => {
     postLogin,
     { isLoading: isLoginLoading, isError: isLoginError, error: loginError }
   ] = usePostLoginMutation()
+  const [
+    resetPassword,
+    {
+      isLoading: isResetPasswordLoading,
+      isError: isResetPasswordError,
+      error: resetPasswordError
+    }
+  ] = useResetPasswordMutation()
+
   const [
     createUser,
     {
@@ -39,7 +49,6 @@ const useAuthActions = () => {
       }
       return
     } catch (error) {
-      console.log('rejected', error)
       return error.data.error_description
     }
   }
@@ -62,7 +71,23 @@ const useAuthActions = () => {
 
   const performSendMail = async username => {
     try {
-      const res = await sendResetCode(username).unwrap()
+      const res = await sendResetCode({ username: username }).unwrap()
+
+      if (res.error) return { result: -1, message: 'Intenta de nuevo' }
+
+      return { result: res.code, message: res.message }
+    } catch (e) {
+      return { result: -1, message: 'Intenta mas tarde' }
+    }
+  }
+
+  const performResetCode = async info => {
+    try {
+      const res = await resetPassword({
+        username: info.username,
+        password: info.password,
+        resetCode: info.resetCode
+      }).unwrap()
 
       if (res.error) return { result: -1, message: 'Intenta de nuevo' }
 
@@ -77,15 +102,19 @@ const useAuthActions = () => {
     performLogout,
     performCreateUser,
     performSendMail,
+    performResetCode,
     isLoginLoading,
     isCreateUserLoading,
     isSendResetCodeLoading,
+    isResetPasswordLoading,
     isLoginError,
     isCreateUserError,
     isSendResetCodeError,
+    isResetPasswordError,
     loginError,
     createUserError,
-    sendResetCodeError
+    sendResetCodeError,
+    resetPasswordError
   }
 }
 

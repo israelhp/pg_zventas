@@ -1,3 +1,8 @@
 export const AUTH_LOGIN_ENPOINT = '/token'
 export const AUTH_REGISTER_ENPOINT = '/api/Users'
 export const AUTH_SEND_RESET_CODE_ENPOINT = '/api/Users/ResetPasswordRequest'
+export const AUTH_SEND_RESET_PASS_ENPOINT = '/api/Users/ResetPassword'
+export const NAV_BRAND_ENPOINT = '/api/Categories/list'
+export const CATALOG_LIST_CATEGORY_ENPOINT = '/api/Product/list'
+export const ORDER_ADD_ORDER_ENPOINT = '/api/Order'
+export const ORDER_LIST_ORDER_ENPOINT = '/api/Order/list'
