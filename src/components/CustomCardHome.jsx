@@ -1,12 +1,13 @@
 import { Card, CardHeader, Image } from '@nextui-org/react'
 import { useNavigate, useLocation } from 'react-router-dom'
 
-export const CustomCard = proms => {
+export const CustomCardHome = proms => {
   const navigate = useNavigate()
   const location = useLocation()
 
   const handleClick = () => {
-    navigate(`${location.pathname + '/' + proms.code}`)
+    console.log(proms.code)
+    navigate(`${'/catalog/WOOFER/' + proms.code}`)
   }
   return (
     <div onClick={handleClick}>

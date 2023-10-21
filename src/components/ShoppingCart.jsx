@@ -32,7 +32,8 @@ const ShoppingCart = () => {
   const navigate = useNavigate()
   const cartItemsCount = useAppSelector(state => state.shoppingCart)
   const isAutenticated = useAppSelector(state => state.auth.isAuthenticated)
-  const { performRemoveProduct } = useShoppingCartActions()
+  const { performRemoveProduct, performUpdateProduct } =
+    useShoppingCartActions()
   const total = cartItemsCount.products.reduce(
     (accumulator, product) => accumulator + product.amount * product.price,
     0
@@ -52,6 +53,15 @@ const ShoppingCart = () => {
       navigate('/payment')
     }
   }
+
+  const handleOnChangeInput = (e, product) => {
+    if (e.target.value >= 1) {
+      const updateProduct = product
+      const productoAModificar = { ...updateProduct, amount: e.target.value }
+      performUpdateProduct(productoAModificar)
+    }
+  }
+
   return (
     <div className="p-9 flex flex-col justify-center items-center">
       <Table aria-label="shopping-cart">
@@ -72,7 +82,12 @@ const ShoppingCart = () => {
                   </User>
                 </TableCell>
                 <TableCell>
-                  <Input type="number" value={product.amount}></Input>
+                  <Input
+                    type="number"
+                    min="1"
+                    value={product.amount}
+                    onChange={e => handleOnChangeInput(e, product)}
+                  ></Input>
                 </TableCell>
                 <TableCell>Q{product.amount * product.price}</TableCell>
                 <TableCell>

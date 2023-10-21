@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useOrderActions from '../hooks/useOrderActions'
 import { useAppSelector } from '../hooks/store'
 import {
@@ -40,6 +40,10 @@ const PaymentForm = () => {
     performRemoveAllProducts()
     navigate('/')
   }
+
+  useEffect(() => {
+    if (isAutenticated.isAutenticated) navigate('/')
+  }, [isAutenticated])
 
   const handleSubmit = e => {
     e.preventDefault()

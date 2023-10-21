@@ -14,6 +14,7 @@ import useOrderActions from '../hooks/useOrderActions'
 import { useEffect, useState } from 'react'
 import { useAppSelector } from '../hooks/store'
 import OrderItem from './OrderItem'
+import { useNavigate } from 'react-router-dom'
 
 const columns = [
   { name: 'PEDIDO', uid: 'order' },
@@ -28,16 +29,19 @@ const statusColorMap = {
 }
 
 const Orders = () => {
+  const navigate = useNavigate()
   const [orders, setOrders] = useState(null)
   const { performListOrders, isListOrdersLoading } = useOrderActions()
   const isAutenticated = useAppSelector(state => state.auth)
 
   useEffect(() => {
-    performListOrders(isAutenticated.token).then(res => {
-      setOrders(res)
-      console.log(res)
-    })
-  }, [])
+    if (!isAutenticated.isAuthenticated) navigate('/')
+    else {
+      performListOrders(isAutenticated.token).then(res => {
+        setOrders(res)
+      })
+    }
+  }, [isAutenticated])
 
   return (
     <div className="p-9 flex flex-col justify-center items-center">

@@ -18,13 +18,7 @@ import {
 } from '@nextui-org/react'
 import { optionsNav } from '../constants/constants'
 import { useAppSelector } from '../hooks/store'
-import {
-  LogoIcon,
-  SearchIcon,
-  ShoppingCartIcon,
-  ChevronDown,
-  ServerIcon
-} from './Icons'
+import { LogoIcon, ShoppingCartIcon, ChevronDown, ServerIcon } from './Icons'
 import ModalLogin from './ModalLogin'
 import useNavActions from '../hooks/useNavActions'
 import useAuthActions from '../hooks/useAuthActions'
@@ -150,20 +144,6 @@ const NavBar = () => {
             }
           }
         })}
-        <div className="hidden md:block">
-          <Input
-            classNames={{
-              // base: 'max-w-full sm:max-w-[10rem] h-10',
-              input: 'text-small',
-              inputWrapper:
-                'font-normal text-default-500 bg-default-400/20 dark:bg-default-500/20'
-            }}
-            placeholder="Type to search..."
-            size="sm"
-            startContent={<SearchIcon />}
-            type="search"
-          />
-        </div>
       </NavbarContent>
       <NavbarContent className="gap-6" justify="end">
         <NavLink to={'/shopping-cart'}>
@@ -190,10 +170,6 @@ const NavBar = () => {
               />
             </DropdownTrigger>
             <DropdownMenu aria-label="Profile Actions" variant="flat">
-              <DropdownItem key="profile" className="h-14 gap-2">
-                <p className="font-semibold">Signed in as</p>
-                <p className="font-semibold">zoey@example.com</p>
-              </DropdownItem>
               <DropdownItem key="settings">
                 <NavLink to={'/orders'}>Pedidos</NavLink>
               </DropdownItem>
@@ -203,7 +179,7 @@ const NavBar = () => {
                 color="danger"
                 onClick={handleClickLogout}
               >
-                Cerrar sesion
+                <NavLink to="/">Cerrar sesion</NavLink>
               </DropdownItem>
             </DropdownMenu>
           </Dropdown>

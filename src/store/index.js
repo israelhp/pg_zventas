@@ -18,7 +18,9 @@ export const persistancesLocalStorageMiddleware = store => next => action => {
   }
 
   if (action.type == 'auth/logout') {
-    localStorage.removeItem('__redux__state__')
+    const { authApi, navApi, catalogApi, orderApi, ...stateToPersist } =
+      store.getState()
+    localStorage.setItem('__redux__state__', JSON.stringify(stateToPersist))
   }
 
   if (action.type == 'nav/setActive') {
@@ -28,6 +30,23 @@ export const persistancesLocalStorageMiddleware = store => next => action => {
   }
 
   if (action.type == 'shoppingCart/addProduct') {
+    const { authApi, navApi, catalogApi, orderApi, ...stateToPersist } =
+      store.getState()
+    localStorage.setItem('__redux__state__', JSON.stringify(stateToPersist))
+  }
+  if (action.type == 'shoppingCart/removeProduct') {
+    const { authApi, navApi, catalogApi, orderApi, ...stateToPersist } =
+      store.getState()
+    localStorage.setItem('__redux__state__', JSON.stringify(stateToPersist))
+  }
+
+  if (action.type == 'shoppingCart/removeAllProducts') {
+    const { authApi, navApi, catalogApi, orderApi, ...stateToPersist } =
+      store.getState()
+    localStorage.setItem('__redux__state__', JSON.stringify(stateToPersist))
+  }
+
+  if (action.type == 'shoppingCart/updateProduct') {
     const { authApi, navApi, catalogApi, orderApi, ...stateToPersist } =
       store.getState()
     localStorage.setItem('__redux__state__', JSON.stringify(stateToPersist))

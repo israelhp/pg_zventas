@@ -1,7 +1,8 @@
 import {
   addProduct,
   removeProduct,
-  removeAllProducts
+  removeAllProducts,
+  updateProduct
 } from '../store/slice/shoppingSlice'
 import { useAppDispatch, useAppSelector } from './store'
 
@@ -14,6 +15,9 @@ const useShoppingCartActions = () => {
       dispatch(addProduct(product))
   }
 
+  const performUpdateProduct = product => {
+    dispatch(updateProduct(product))
+  }
   const performRemoveProduct = product => {
     dispatch(removeProduct(product))
   }
@@ -23,7 +27,12 @@ const useShoppingCartActions = () => {
     dispatch(removeAllProducts())
   }
 
-  return { performAddProduct, performRemoveProduct, performRemoveAllProducts }
+  return {
+    performAddProduct,
+    performRemoveProduct,
+    performRemoveAllProducts,
+    performUpdateProduct
+  }
 }
 
 export default useShoppingCartActions

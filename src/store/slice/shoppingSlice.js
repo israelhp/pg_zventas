@@ -22,7 +22,6 @@ export const shoppingCartSlice = createSlice({
     },
     removeProduct: (state, action) => {
       state.products = state.products.filter(product => {
-        console.log(action.payload.code)
         return product.code !== action.payload.code
       })
       state.count = state.count - 1
@@ -31,10 +30,16 @@ export const shoppingCartSlice = createSlice({
     removeAllProducts: state => {
       state.products = []
       state.count = 0
+    },
+    updateProduct: (state, action) => {
+      state.products = state.products.map(product => {
+        if (product.code == action.payload.code) return action.payload
+        return product
+      })
     }
   }
 })
 
-export const { addProduct, removeProduct, removeAllProducts } =
+export const { addProduct, removeProduct, removeAllProducts, updateProduct } =
   shoppingCartSlice.actions
 export default shoppingCartSlice.reducer

@@ -89,14 +89,7 @@ const ModalLogin = () => {
                     {errors.id != 0 ? errors.message : ''}
                   </p>
                 </div>
-                <div className="flex py-2 px-1 justify-between">
-                  <Checkbox
-                    classNames={{
-                      label: 'text-small'
-                    }}
-                  >
-                    Remember me
-                  </Checkbox>
+                <div className="flex py-2 px-1 justify-center">
                   <NavLink
                     to="/forgot-password"
                     className="text-blue-500 text-sm"
